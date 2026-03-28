@@ -5,7 +5,11 @@ const path = require("path");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+//--------------------MIDDLEWARES--------------------
+app.use(express.urlencoded({extended : true}));
 
+
+let notes = ["study", "gym", "code"];
 
 // ------------------HOME PAGE----------------------- 
 app.get("/", (req, res) => {
@@ -13,8 +17,21 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-    let notes = ["study", "gym", "code"];
     res.render("home", {notes});
+});
+
+
+//------------------ADD NOTE--------------------------
+app.get("/new", (req, res) => {
+    res.render("new");
+});
+
+app.post("/add", (req, res) => {
+    let newNote = req.body.text;
+    notes.push(newNote);
+    console.log("New note : ", newNote);
+    
+    res.redirect("/home");
 });
 
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mini-notes-app</title>
+</head>
+<body>
+    <h1>Add New Note</h1>
+
+    <form method="POST" action="/add">
+        <label for="note">Note : </label>
+        <input 
+            type="text" 
+            placeholder="add a note"
+            name="text"
+            id="note"
+            required
+        >
+        <button>Add</button>
+    </form>
+</body>
+</html>
