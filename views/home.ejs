@@ -6,7 +6,16 @@
     <title>mini-notes-app</title>
 </head>
 <body>
-    <h1>Welcome to notes App</h1>
-    <p>This is my Day-2 with EJS</p>
+    <h1>Welcome to Notes App</h1>
+    
+    <ul>
+        <% notes.forEach(note => { %>
+            <li><%= note  %></li>
+        <% }); %>
+    </ul>
+
+
+    <p>This is my Day-4 with EJS</p>
 </body>
 </html>
+

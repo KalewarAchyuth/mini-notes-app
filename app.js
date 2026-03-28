@@ -7,12 +7,14 @@ app.set("views", path.join(__dirname, "views"));
 
 
 
+// ------------------HOME PAGE----------------------- 
 app.get("/", (req, res) => {
-    res.redirect("home");
+    res.redirect("/home");
 });
 
 app.get("/home", (req, res) => {
-    res.render("home");
+    let notes = ["study", "gym", "code"];
+    res.render("home", {notes});
 });
 
 
