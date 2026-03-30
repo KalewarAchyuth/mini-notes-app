@@ -28,7 +28,11 @@ app.get("/new", (req, res) => {
 
 app.post("/add", (req, res) => {
     let newNote = req.body.text;
-    notes.push(newNote);
+
+    if(!newNote || newNote.trim() === "") {
+        return res.send("Note cannot be empty");
+    }
+    notes.push(newNote.trim());
     console.log("New note : ", newNote);
     
     res.redirect("/home");
