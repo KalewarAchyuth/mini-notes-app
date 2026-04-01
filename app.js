@@ -33,8 +33,16 @@ app.post("/add", (req, res) => {
         return res.send("Note cannot be empty");
     }
     notes.push(newNote.trim());
-    console.log("New note : ", newNote);
     
+    res.redirect("/home");
+});
+
+
+//------------------DELETE NOTE--------------------------
+app.post("/delete/:index", (req, res) => {
+    let idx = req.body.index;
+    notes.splice(idx, 1);
+
     res.redirect("/home");
 });
 
