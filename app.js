@@ -46,6 +46,25 @@ app.post("/delete/:index", (req, res) => {
     res.redirect("/home");
 });
 
+//------------------EDIT NOTE--------------------------
+app.post("/edit/:index", (req, res) => {
+    let idx = req.params.index;
+    let note = notes[idx];
+
+
+    res.render("edit", {note, idx});
+    
+});
+
+//------------------UPDATE NOTE--------------------------
+app.post("/update/:index", (req, res) => {
+    let idx = req.params.index;
+    let updatedNote = req.body.note;
+    
+    notes[idx] = updatedNote;
+
+    res.redirect("/home");
+})
 
 
 const port = 3000;

@@ -6,18 +6,16 @@
     <title>mini-notes-app</title>
 </head>
 <body>
-    <h1>Add New Note</h1>
+    <h1>Edit</h1>
 
-    <form method="POST" action="/add">
-        <label for="note">Note : </label>
+    <form method="POST" action="/update/<%= idx %>">
+        <label >Note : </label>
         <input 
             type="text" 
-            placeholder="add a note"
-            name="text"
-            id="note"
-            required
+            name="note"
+            value="<%= note %>"
         >                                       
-        <button>Add</button>
+        <button>Edit</button>
     </form>
 </body>
 </html>
