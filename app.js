@@ -1,22 +1,32 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+const mongoose = require("mongoose");
+const Note = require("./models/note");
 
 //--------------------MIDDLEWARES--------------------
 app.use(express.urlencoded({extended : true}));
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-let notes = ["study", "gym", "code"];
+
+
+//---------------------CONNECT DB------------------------
+mongoose.connect("mongodb://127.0.0.1:27017/notesApp")
+.then(() => console.log("DB CONNECTED"))
+.catch((err) => console.log("ERROR", err));
+
+
 
 // ------------------HOME PAGE----------------------- 
 app.get("/", (req, res) => {
     res.redirect("/home");
 });
 
-app.get("/home", (req, res) => {
+app.get("/home", async(req, res) => {
+
+    let notes = await Note.find();
     res.render("home", {notes});
 });
 
@@ -32,37 +42,50 @@ app.post("/add", (req, res) => {
     if(!newNote || newNote.trim() === "") {
         return res.send("Note cannot be empty");
     }
-    notes.push(newNote.trim());
+
+    console.log(newNote);
+    
+    const note = new Note({
+        text: newNote.trim(),
+    });
+
+    note.save()
+    .then((res) => console.log(res))
+    .catch((err) => console.log("ERROR", err));
     
     res.redirect("/home");
 });
 
 
 //------------------DELETE NOTE--------------------------
-app.post("/delete/:index", (req, res) => {
-    let idx = req.body.index;
-    notes.splice(idx, 1);
+app.post("/delete/:id", async(req, res) => {
+    let id = req.params.id;
+
+    let deletedNote = await Note.findByIdAndDelete(id);
+    console.log(deletedNote);
 
     res.redirect("/home");
 });
 
 //------------------EDIT NOTE--------------------------
-app.post("/edit/:index", (req, res) => {
-    let idx = req.params.index;
-    let note = notes[idx];
+app.post("/edit/:id", async(req, res) => {
+    let id = req.params.id;
+    let note = await Note.findById(id);
 
+    if (!note) {
+        return res.send("Note not found ❌");
+    }
 
-    res.render("edit", {note, idx});
+    res.render("edit", {note});
     
 });
 
 //------------------UPDATE NOTE--------------------------
-app.post("/update/:index", (req, res) => {
-    let idx = req.params.index;
-    let updatedNote = req.body.note;
+app.post("/update/:id", async(req, res) => {
+    let id = req.params.id;
+    let updatedNote = req.body.text;
     
-    notes[idx] = updatedNote;
-
+    await Note.findByIdAndUpdate(id, {text : updatedNote});
     res.redirect("/home");
 })
 

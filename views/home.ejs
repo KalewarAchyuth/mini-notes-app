@@ -9,25 +9,25 @@
     <h1>Welcome to Notes App</h1>
     
     <ul>
-        <% notes.forEach((note, index) => { %>
+        <% notes.forEach(note => { %>
 
-            <li><%= note  %></li>
+            <li><%= note.text %></li>
 
-            <form method="POST" action="/edit/<%= index %>">
+            <form method="POST" action="/edit/<%= note._id %>">
                 <button type="submit">Edit</button>
             </form>
 
-            <form method="POST" action="/delete/<%= index %>">
+            <form method="POST" action="/delete/<%= note._id %>">
                 <button type="submit">Delete</button>
             </form>
 
         <% }); %>
     </ul>
 
-    <a href="/new">Add New Note</a>
+    <form method="GET" action="/new">
+        <button>Add New Note</button>
+    </form>
 
-
-    <p>This is my Day-6 with EJS</p>
 </body>
 </html>
 

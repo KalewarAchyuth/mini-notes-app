@@ -8,12 +8,12 @@
 <body>
     <h1>Edit</h1>
 
-    <form method="POST" action="/update/<%= idx %>">
+    <form method="POST" action="/update/<%= note._id %>" >
         <label >Note : </label>
         <input 
             type="text" 
-            name="note"
-            value="<%= note %>"
+            name="text"
+            value="<%= note.text %>"
         >                                       
         <button>Edit</button>
     </form>
